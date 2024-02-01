@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import Todo from '../utils/models'
+import Todo from '../../../utils/models'
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
 import './SingleTodo.css'

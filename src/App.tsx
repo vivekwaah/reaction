@@ -1,39 +1,19 @@
-import { useState } from "react";
+import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import InputField from "./components/InputField";
-
-import Todo from "./utils/models";
-import TodoList from "./components/TodoList";
-
+import TodosApp from "./components/Apps/TodoList/TodosApp";
+import Home from "./components/Home";
 
 const App: React.FC = () => {
 
-  const [todo, setTodo] = useState<string>("");
-  const [todos, setTodos] = useState<Todo[]>([])
-
-  const handleAdd = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (todo) {
-      setTodos([...todos, {
-        id: Date.now(),
-        todo: todo,
-        isDone: false
-      }]);
-
-      setTodo('');
-    }
-  };
-
   return (
-    <div className="App">
-      <div className="heading">Tasks</div>
-      <InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
-
-      <TodoList todos={todos} setTodos={setTodos} />
-      
-
-    </div>
+    <>
+      <div className="main-container">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/todos" element={<TodosApp />} />
+        </Routes>
+      </div>
+    </>
   );
 };
 
