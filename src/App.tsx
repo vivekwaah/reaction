@@ -7,16 +7,14 @@ import {
   HomeIcon,
   UsersIcon,
   XMarkIcon,
+  ClockIcon,
+  ListBulletIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Link, Route, Routes } from 'react-router-dom'
 import Home from './components/Home'
 import TodosApp from './components/Apps/TodoList/TodosApp'
-
-const navigation = [
-  { name: 'Home', route: '/', icon: HomeIcon, current: true },
-  { name: 'Tasks', route: '/todos', icon: UsersIcon, current: false },
-]
+import Stopwatch from './components/Apps/Stopwatch/Stopwatch'
 
 const userNavigation = [
   { name: 'Your profile', href: '#' },
@@ -29,6 +27,13 @@ function classNames(...classes: any) {
 
 const App: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [currentNavigation, setCurrentNavigation] = useState('Home')
+
+  const navigation = [
+    { name: 'Home', route: '/', icon: HomeIcon },
+    { name: 'TODOs', route: '/todos', icon: ListBulletIcon },
+    { name: 'Stopwatch', route: '/stopwatch', icon: ClockIcon },
+  ];
 
   return (
     <>
@@ -88,11 +93,11 @@ const App: React.FC = () => {
                         <li>
                           <ul role="list" className="-mx-2 space-y-1">
                             {navigation.map((item) => (
-                              <li key={item.name}>
+                              <li key={item.name} onClick={() => { setCurrentNavigation(item.name) }}>
                                 <Link
                                   to={item.route}
                                   className={classNames(
-                                    item.current
+                                    currentNavigation === item.name
                                       ? 'bg-gray-50 text-indigo-600'
                                       : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
@@ -100,7 +105,7 @@ const App: React.FC = () => {
                                 >
                                   <item.icon
                                     className={classNames(
-                                      item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                                      currentNavigation === item.name ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
                                       'h-6 w-6 shrink-0'
                                     )}
                                     aria-hidden="true"
@@ -148,11 +153,11 @@ const App: React.FC = () => {
                 <li>
                   <ul role="list" className="-mx-2 space-y-1">
                     {navigation.map((item) => (
-                      <li key={item.name}>
+                      <li key={item.name} onClick={() => { setCurrentNavigation(item.name) }}>
                         <Link
                           to={item.route}
                           className={classNames(
-                            item.current
+                            currentNavigation === item.name
                               ? 'bg-gray-50 text-indigo-600'
                               : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
@@ -160,7 +165,7 @@ const App: React.FC = () => {
                         >
                           <item.icon
                             className={classNames(
-                              item.current ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                              currentNavigation === item.name ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
                               'h-6 w-6 shrink-0'
                             )}
                             aria-hidden="true"
@@ -278,6 +283,7 @@ const App: React.FC = () => {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/todos" element={<TodosApp />} />
+                <Route path="/stopwatch" element={<Stopwatch />} />
               </Routes>
             </div>
           </main>
