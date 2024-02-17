@@ -18,8 +18,11 @@ const TodosApp: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		todos.length ?? localStorage.setItem("todos", JSON.stringify(todos));
+		if (!todos.length) {
+			return;
+		}
 
+		localStorage.setItem("todos", JSON.stringify(todos))
 	}, [todos]);
 
 	const handleAdd = (e: React.FormEvent) => {
