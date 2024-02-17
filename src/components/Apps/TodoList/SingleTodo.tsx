@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react'
 import Todo from '../../../utils/models'
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
-import './SingleTodo.css'
 
 interface Props {
   todo: Todo,
@@ -49,27 +48,26 @@ const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
   };
 
 
-
   return (
-    <form className='todos__single' onSubmit={(e) => { handleEdit(e, todo.id) }}>
+    <form className="flex border rounded-lg p-5 mt-4 bg-cover bg-center hover:shadow-lg hover:scale-200 focus-visible:ring focus:border-red-400 transition duration-200 bg-yellow-300" onSubmit={(e) => { handleEdit(e, todo.id) }}>
       {edit ? (<input
         value={editTodo}
         onChange={(e) => { setEditTodo(e.target.value) }}
-        className='todos__single--text' />) :
+        className='flex-1 p-5 border-none text-2xl focus:outline-none' />) :
         todo.isDone ?
-          (<s className="todos__single--text">
+          (<s className="flex-1 p-5 border-none text-2xl focus:outline-none">
             {todo.todo}
-          </s>) :
-          (<span className="todos__single--text">
+          </s >) :
+          (<span className="flex-1 p-5 border-none text-2xl focus:outline-none">
             {todo.todo}
           </span>)}
 
       <div className="flex">
-        <span className="icon" onClick={() => { handleDone(todo.id) }}><FaCheck /></span>
-        <span className="icon" onClick={() => { editTodoText(todo.id) }}><MdEdit /></span>
-        <span className="icon" onClick={() => { handleDelete(todo.id) }}><MdDelete /></span>
+        <span className="ml-2 text-2xl cursor-pointer" onClick={() => { handleDone(todo.id) }}><FaCheck /></span>
+        <span className="ml-2 text-2xl cursor-pointer" onClick={() => { editTodoText(todo.id) }}><MdEdit /></span>
+        <span className="ml-2 text-2xl cursor-pointer" onClick={() => { handleDelete(todo.id) }}><MdDelete /></span>
       </div>
-    </form>
+    </form >
   )
 }
 

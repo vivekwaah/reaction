@@ -3,23 +3,12 @@ import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
   BellIcon,
-  HomeIcon,
   XMarkIcon,
-  ClockIcon,
-  ListBulletIcon
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Link, Route, Routes } from 'react-router-dom'
-import Home from './components/Home'
-import TodosApp from './components/Apps/TodoList/TodosApp'
-import Stopwatch from './components/Apps/Stopwatch/Stopwatch'
+import { AppNavigations } from './navigations/AppNavigations'
 
-type NavigationItem = {
-  name: string;
-  route: string;
-  icon: any;
-  component: React.ComponentType<any>;
-}
 
 const userNavigation = [
   { name: 'Your profile', href: '#' },
@@ -33,12 +22,6 @@ function classNames(...classes: (string | boolean | undefined)[]) {
 const App: React.FC = () => {
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
   const [currentNavigation, setCurrentNavigation] = useState<string>('Home')
-
-  const navigation: NavigationItem[] = [
-    { name: 'Home', route: '/', icon: HomeIcon, component: Home },
-    { name: 'TODOs', route: '/todos', icon: ListBulletIcon, component: TodosApp },
-    { name: 'Stopwatch', route: '/stopwatch', icon: ClockIcon, component: Stopwatch },
-  ];
 
   return (
     <>
@@ -97,7 +80,7 @@ const App: React.FC = () => {
                       <ul role="list" className="flex flex-1 flex-col gap-y-7">
                         <li>
                           <ul role="list" className="-mx-2 space-y-1">
-                            {navigation.map((item) => (
+                            {AppNavigations.map((item) => (
                               <li key={item.name} onClick={() => { setCurrentNavigation(item.name) }}>
                                 <Link
                                   to={item.route}
@@ -145,7 +128,7 @@ const App: React.FC = () => {
               <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
                   <ul role="list" className="-mx-2 space-y-1">
-                    {navigation.map((item) => (
+                    {AppNavigations.map((item) => (
                       <li key={item.name} onClick={() => { setCurrentNavigation(item.name) }}>
                         <Link
                           to={item.route}
@@ -262,11 +245,11 @@ const App: React.FC = () => {
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
               <Routes>
-                {navigation.map((routeNavigation) => (
+                {AppNavigations.map((navigation) => (
                   <Route
-                    key={routeNavigation.name}
-                    path={routeNavigation.route}
-                    element={<routeNavigation.component />}
+                    key={navigation.name}
+                    path={navigation.route}
+                    element={<navigation.component />}
                   />
                 ))}
               </Routes>

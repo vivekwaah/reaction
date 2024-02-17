@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InputField from "./InputField";
 import Todo from "../../../utils/models";
 import TodoList from "./TodoList";
@@ -8,7 +8,19 @@ import "./TodosApp.css";
 const TodosApp: React.FC = () => {
 
 	const [todo, setTodo] = useState<string>("");
-	const [todos, setTodos] = useState<Todo[]>([])
+	const [todos, setTodos] = useState<Todo[]>([]);
+
+	useEffect(() => {
+		const storedTodos = localStorage.getItem("todos");
+		if (storedTodos) {
+			setTodos(JSON.parse(storedTodos));
+		}
+	}, []);
+
+	useEffect(() => {
+		todos.length ?? localStorage.setItem("todos", JSON.stringify(todos));
+
+	}, [todos]);
 
 	const handleAdd = (e: React.FormEvent) => {
 		e.preventDefault();
@@ -25,8 +37,8 @@ const TodosApp: React.FC = () => {
 	};
 
 	return (
-		<div className="todos-app">
-			<div className="heading">TODOs</div>
+		<div className="min-h-screen flex flex-col items-center bg-blue-600 font-neucha">
+			<div className="uppercase text-5xl mt-8 mb-8 text-white z-10 text-center">TODOs</div>
 			<InputField todo={todo} setTodo={setTodo} handleAdd={handleAdd} />
 			<TodoList todos={todos} setTodos={setTodos} />
 		</div>
