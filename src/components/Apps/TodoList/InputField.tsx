@@ -23,14 +23,14 @@ const InputField: React.FC<Props> = ({ todo, setTodo, handleAdd }) => {
 					ref={inputRef}
 					type="text"
 					className="input__box"
-					placeholder="Add a task"
+					placeholder="Write todo"
 					value={todo}
 					onChange={(e) => {
 						setTodo(e.target.value);
 					}}
 				/>
 				<button className="input__submit" type="submit">
-					Go
+					Add
 				</button>
 			</form>
 		</div>
