@@ -3,9 +3,7 @@ import { Dialog, Menu, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
   BellIcon,
-  Cog6ToothIcon,
   HomeIcon,
-  UsersIcon,
   XMarkIcon,
   ClockIcon,
   ListBulletIcon
@@ -16,20 +14,27 @@ import Home from './components/Home'
 import TodosApp from './components/Apps/TodoList/TodosApp'
 import Stopwatch from './components/Apps/Stopwatch/Stopwatch'
 
+type NavigationItem = {
+  name: string;
+  route: string;
+  icon: any;
+  component: React.ComponentType<any>;
+}
+
 const userNavigation = [
   { name: 'Your profile', href: '#' },
   { name: 'Sign out', href: '#' },
 ]
 
-function classNames(...classes: any) {
+function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 const App: React.FC = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentNavigation, setCurrentNavigation] = useState('Home')
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
+  const [currentNavigation, setCurrentNavigation] = useState<string>('Home')
 
-  const navigation = [
+  const navigation: NavigationItem[] = [
     { name: 'Home', route: '/', icon: HomeIcon, component: Home },
     { name: 'TODOs', route: '/todos', icon: ListBulletIcon, component: TodosApp },
     { name: 'Stopwatch', route: '/stopwatch', icon: ClockIcon, component: Stopwatch },
@@ -39,7 +44,7 @@ const App: React.FC = () => {
     <>
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
+          <Dialog as="div" className="relative z-50 lg:hidden" onClose={() => setSidebarOpen(false)}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -259,6 +264,7 @@ const App: React.FC = () => {
               <Routes>
                 {navigation.map((routeNavigation) => (
                   <Route
+                    key={routeNavigation.name}
                     path={routeNavigation.route}
                     element={<routeNavigation.component />}
                   />
