@@ -25,7 +25,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div>
+      <div className='antialiased'>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog as="div" className="relative z-50 lg:hidden" onClose={() => setSidebarOpen(false)}>
             <Transition.Child

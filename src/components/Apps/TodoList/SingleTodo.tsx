@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import Todo from '../../../utils/models'
 import { MdEdit, MdDelete } from "react-icons/md";
 import { FaCheck } from "react-icons/fa6";
+import moment from 'moment';
 
 interface Props {
   todo: Todo,
@@ -48,26 +49,38 @@ const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
   };
 
 
-  return (
-    <form className="flex border rounded-lg p-5 mt-4 bg-cover bg-center hover:shadow-lg hover:scale-200 focus-visible:ring focus:border-red-400 transition duration-200 bg-yellow-300" onSubmit={(e) => { handleEdit(e, todo.id) }}>
-      {edit ? (<input
-        value={editTodo}
-        onChange={(e) => { setEditTodo(e.target.value) }}
-        className='flex-1 p-5 border-none text-2xl focus:outline-none' />) :
-        todo.isDone ?
-          (<s className="flex-1 p-5 border-none text-2xl focus:outline-none">
-            {todo.todo}
-          </s >) :
-          (<span className="flex-1 p-5 border-none text-2xl focus:outline-none">
-            {todo.todo}
-          </span>)}
+  const formatDate = () => {
+    return moment(todo.id).format('LLLL');
+  }
 
-      <div className="flex">
+
+  return (
+    <form className="flex flex-col border rounded-lg p-5 mt-4 bg-cover bg-center hover:shadow-lg hover:scale-200 focus-visible:ring focus:border-red-400 transition duration-200 bg-yellow-300" onSubmit={(e) => { handleEdit(e, todo.id) }}>
+      <div className="flex-1 p-5 border-none text-2xl focus:outline-none">
+        {edit ? (
+          <input
+            value={editTodo}
+            onChange={(e) => { setEditTodo(e.target.value) }}
+            className='w-full border-none focus:outline-none'
+          />
+        ) : todo.isDone ? (
+          <s className='text-nowrap'>{todo.todo}</s>
+        ) : (
+          <span className='text-balance'>{todo.todo}</span>
+        )}
+      </div>
+
+      <div className="flex justify-between items-center">
         <span className="ml-2 text-2xl cursor-pointer" onClick={() => { handleDone(todo.id) }}><FaCheck /></span>
         <span className="ml-2 text-2xl cursor-pointer" onClick={() => { editTodoText(todo.id) }}><MdEdit /></span>
         <span className="ml-2 text-2xl cursor-pointer" onClick={() => { handleDelete(todo.id) }}><MdDelete /></span>
       </div>
-    </form >
+
+      <div className="flex justify-end italic text-xs pt-4 font-thin text-yellow-950">
+        {formatDate()}
+      </div>
+    </form>
+
   )
 }
 
