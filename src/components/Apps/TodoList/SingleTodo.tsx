@@ -64,7 +64,7 @@ const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
             {todo.todo}
           </span>)}
 
-      <div>
+      <div className="flex">
         <span className="icon" onClick={() => { handleDone(todo.id) }}><FaCheck /></span>
         <span className="icon" onClick={() => { editTodoText(todo.id) }}><MdEdit /></span>
         <span className="icon" onClick={() => { handleDelete(todo.id) }}><MdDelete /></span>

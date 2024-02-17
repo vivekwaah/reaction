@@ -30,9 +30,9 @@ const App: React.FC = () => {
   const [currentNavigation, setCurrentNavigation] = useState('Home')
 
   const navigation = [
-    { name: 'Home', route: '/', icon: HomeIcon },
-    { name: 'TODOs', route: '/todos', icon: ListBulletIcon },
-    { name: 'Stopwatch', route: '/stopwatch', icon: ClockIcon },
+    { name: 'Home', route: '/', icon: HomeIcon, component: Home },
+    { name: 'TODOs', route: '/todos', icon: ListBulletIcon, component: TodosApp },
+    { name: 'Stopwatch', route: '/stopwatch', icon: ClockIcon, component: Stopwatch },
   ];
 
   return (
@@ -116,18 +116,6 @@ const App: React.FC = () => {
                             ))}
                           </ul>
                         </li>
-                        <li className="mt-auto">
-                          <a
-                            href="#"
-                            className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
-                          >
-                            <Cog6ToothIcon
-                              className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
-                              aria-hidden="true"
-                            />
-                            Settings
-                          </a>
-                        </li>
                       </ul>
                     </nav>
                   </div>
@@ -177,18 +165,6 @@ const App: React.FC = () => {
                   </ul>
                 </li>
 
-                <li className="mt-auto">
-                  <a
-                    href="#"
-                    className="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-700 hover:bg-gray-50 hover:text-indigo-600"
-                  >
-                    <Cog6ToothIcon
-                      className="h-6 w-6 shrink-0 text-gray-400 group-hover:text-indigo-600"
-                      aria-hidden="true"
-                    />
-                    Settings
-                  </a>
-                </li>
               </ul>
             </nav>
           </div>
@@ -216,7 +192,7 @@ const App: React.FC = () => {
                 <input
                   id="search-field"
                   className="block h-full w-full border-0 py-0 pl-8 pr-0 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
-                  placeholder="Search..."
+                  placeholder="Search... for apps"
                   type="search"
                   name="search"
                 />
@@ -281,9 +257,12 @@ const App: React.FC = () => {
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/todos" element={<TodosApp />} />
-                <Route path="/stopwatch" element={<Stopwatch />} />
+                {navigation.map((routeNavigation) => (
+                  <Route
+                    path={routeNavigation.route}
+                    element={<routeNavigation.component />}
+                  />
+                ))}
               </Routes>
             </div>
           </main>
