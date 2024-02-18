@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import "./InputField.css";
 
 interface Props {
 	todo: string;
@@ -13,23 +12,22 @@ const InputField: React.FC<Props> = ({ todo, setTodo, handleAdd }) => {
 	return (
 		<div>
 			<form
-				className="input__form"
+				className="flex w-90 relative items-center"
 				onSubmit={(e) => {
 					handleAdd(e);
 					inputRef.current?.blur();
 				}}
 			>
-				<input
-					ref={inputRef}
-					type="text"
-					className="input__box"
+				<textarea
+					className="w-full rounded-full p-5 text-2xl border-none transition duration-200 shadow-inner"
 					placeholder="Write todo"
 					value={todo}
 					onChange={(e) => {
 						setTodo(e.target.value);
-					}}
-				/>
-				<button className="input__submit" type="submit">
+					}}>
+				</textarea>
+
+				<button className="absolute w-12 h-12 m-3 rounded-full right-0 border-none bg-blue-500 text-white transition duration-200 shadow-md hover:bg-blue-600 active:scale-80 active:shadow-sm" type="submit">
 					Add
 				</button>
 			</form>

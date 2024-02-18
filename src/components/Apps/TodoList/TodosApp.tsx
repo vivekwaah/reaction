@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import InputField from "./InputField";
 import Todo from "../../../utils/models";
 import TodoList from "./TodoList";
-import "./TodosApp.css";
-
 
 const TodosApp: React.FC = () => {
 

@@ -164,22 +164,46 @@ const ClickCounter: React.FC = () => {
 					<p className="mt-6 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
 						Clicks Per Second
 					</p>
-					<p className="mt-6 text-lg leading-8 text-gray-600">
+					<p className="mt-1 mb-4 text-sm leading-8 text-gray-600">
 						Here's a reason to buy new mouse. Click it.
 					</p>
 				</div>
 
-				{isCounting && <span> Time Left: {userTime - timerCount}</span>}
+				{isCounting && (
+					<>
+						<span> Time Left: {userTime - timerCount}</span>
+						<p>Clicks: {clickCount}</p>
+					</>
+				)}
 
-				{isCounting && <p>Clicks: {clickCount}</p>}
+				{!isCounting && (
+					<>
+						<input
+							type="number"
+							placeholder="Enter time in seconds"
+							onChange={handleCountdownInputChange}
+							className={`mt-4 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${inputValidation && 'border-rose-700'}`}
+						/>
+						<button
+							onClick={startCountdown}
+							className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+						>
+							Start
+						</button>
+					</>
+				)}
 
-				{!isCounting && <input type="number" placeholder="Enter time in seconds" onChange={handleCountdownInputChange} className={`mt-4 px-2 py-1 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 ${inputValidation && 'border-rose-700'}`} />}
-
-				{!isCounting && <button onClick={startCountdown} className="mt-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">Start</button>}
-
-				{clicksPerSecond > 0 && <p>Clicks per second: {clicksPerSecond}</p>}
-
-				{clicksPerSecond > 0 && <button onClick={resetTimer} className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Reset</button>}
+				{clicksPerSecond > 0 && (
+					<>
+						<p>Clicks per second: {clicksPerSecond}</p>
+						<button
+							onClick={resetTimer}
+							className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600"
+						>
+							Reset
+						</button>
+					</>
+				)}
 			</div>
 		</div >
 
