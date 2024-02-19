@@ -5,7 +5,7 @@ const Home: React.FC = () => {
 	return (
 		<ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
 			{AppNavigations.filter(app => app.route !== "/").map((app) => (
-				<li className="relative bg-zinc-200 rounded-lg">
+				<li className="relative bg-zinc-200 rounded-lg" key={app.route}>
 					<Link
 						to={app.route}
 					>
