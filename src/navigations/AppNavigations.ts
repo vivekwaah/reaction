@@ -3,15 +3,9 @@ import Home from '../components/Home';
 import TodosApp from '../components/Apps/TodoList/TodosApp';
 import Stopwatch from '../components/Apps/Stopwatch/Stopwatch';
 import ClickCounter from '../components/Apps/ClickCounter/ClickCounter';
+import AppNavigationsModel from './AppNavigationsModel';
 
-type NavigationItem = {
-	name: string;
-	route: string;
-	icon: any;
-	component: React.ComponentType<any>;
-}
-
-export const AppNavigations: NavigationItem[] = [
+export const AppNavigations: AppNavigationsModel[] = [
 	{ name: 'Home', route: '/', icon: HomeIcon, component: Home },
 	{ name: 'TODOs', route: '/todos', icon: ListBulletIcon, component: TodosApp },
 	{ name: 'Stopwatch', route: '/stopwatch', icon: ClockIcon, component: Stopwatch },
