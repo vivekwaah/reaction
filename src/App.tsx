@@ -9,6 +9,7 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Link, Route, Routes } from 'react-router-dom'
 import { AppNavigations } from './navigations/AppNavigations'
 import Search from './components/Layouts/Search'
+import ProductDetail from './components/Apps/Store/ProductDetail'
 
 
 const userNavigation = [
@@ -234,6 +235,13 @@ const App: React.FC = () => {
                     element={<navigation.component />}
                   />
                 ))}
+
+                <Route
+                  key="okokdkfo342"
+                  path="/product/:id"
+                  element={<ProductDetail />}
+                />
+
               </Routes>
             </div>
           </main>

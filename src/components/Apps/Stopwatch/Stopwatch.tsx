@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import calculateTime from '../../../helpers/Timer';
+import calculateTime from '../../../utilities/Timer';
 import Control from './Control';
 
 const Stopwatch: React.FC = () => {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import InputField from "./InputField";
-import Todo from "../../../utils/models";
+import Todo from "../Stopwatch/utils/models";
 import TodoList from "./TodoList";
 
 const TodosApp: React.FC = () => {
