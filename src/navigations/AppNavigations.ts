@@ -6,6 +6,7 @@ import ClickCounter from '../components/Apps/ClickCounter/ClickCounter';
 import AppNavigationsModel from './AppNavigationsModel';
 import Store from '../components/Apps/Store/Products';
 
+// TODO: Add sub navigation
 export const AppNavigations: AppNavigationsModel[] = [
 	{ name: 'Home', route: '/', icon: HomeIcon, component: Home },
 	{ name: 'TODOs', route: '/todos', icon: ListBulletIcon, component: TodosApp },

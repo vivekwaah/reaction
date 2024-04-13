@@ -10,6 +10,7 @@ import { Link, Route, Routes } from 'react-router-dom'
 import { AppNavigations } from './navigations/AppNavigations'
 import Search from './components/Layouts/Search'
 import ProductDetail from './components/Apps/Store/ProductDetail'
+import StoreCart from './components/Apps/Store/StoreCart'
 
 
 const userNavigation = [
@@ -237,9 +238,15 @@ const App: React.FC = () => {
                 ))}
 
                 <Route
-                  key="okokdkfo342"
+                  key="product-detail"
                   path="/product/:id"
                   element={<ProductDetail />}
+                />
+
+                <Route
+                  key="store-cart"
+                  path="/cart"
+                  element={<StoreCart />}
                 />
 
               </Routes>
