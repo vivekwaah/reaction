@@ -1,20 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
-import { decrement, increment, incrementByValue } from '../../../state/counter/counterSlice';
+import { decrement, increment, incrementByValue, setUserIncrementValue } from '../../../state/counter/counterSlice';
 import Heading from './Heading';
 
 const Counter = () => {
 	const count = useSelector((state: RootState) => state.counter.value);
+	const userIncrementValue = useSelector((state: RootState) => state.counter.userIncrementValue);
 	const dispatch = useDispatch();
-	const [incrementValue, setIncrementValue] = useState<number>(10);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		setIncrementValue(parseInt(e.target.value));
+		dispatch(setUserIncrementValue(parseInt(e.target.value)));
 	};
 
 	const handleIncrementByValue = () => {
-		dispatch(incrementByValue(incrementValue));
+		dispatch(incrementByValue(userIncrementValue));
 	};
 
 	return (
@@ -43,17 +43,17 @@ const Counter = () => {
 								type="number"
 								min="1"
 								placeholder='Add your value to increase'
-								value={incrementValue}
+								value={userIncrementValue}
 								onChange={handleInputChange}
 								className="px-3 py-2 border border-gray-400 rounded-lg mr-2 focus:outline-none focus:border-purple-400 text-black"
 							/>
 
 							<button
-								disabled={isNaN(incrementValue)}
+								disabled={isNaN(userIncrementValue)}
 								className="px-6 py-3 bg-purple-500 text-white rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400"
 								onClick={handleIncrementByValue}
 							>
-								Increment by {isNaN(incrementValue) ? '---' : incrementValue}
+								Increment by {isNaN(userIncrementValue) ? '---' : userIncrementValue}
 							</button>
 						</div>
 					</div>

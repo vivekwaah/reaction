@@ -10,7 +10,7 @@ import Counter from '../components/Apps/Counter/Counter';
 // TODO: Add sub navigation
 export const AppNavigations: AppNavigationsModel[] = [
 	{ name: 'Home', route: '/', icon: HomeIcon, component: Home },
-	{ name: 'Counter App', route: '/counter', icon: LifebuoyIcon, component: Counter },
+	{ name: 'Counter', route: '/counter', icon: LifebuoyIcon, component: Counter },
 	{ name: 'TODOs', route: '/todos', icon: ListBulletIcon, component: TodosApp },
 	{ name: 'Stopwatch', route: '/stopwatch', icon: ClockIcon, component: Stopwatch },
 	{ name: 'CPS', route: '/cps', icon: CursorArrowRaysIcon, component: ClickCounter },
