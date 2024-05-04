@@ -3,14 +3,15 @@ import { useParams } from 'react-router-dom';
 
 import Product from './utils/Product';
 import StoreNav from './StoreNav';
+import { PRODUCT_URL } from './utils/config';
 
 const ProductDetail: React.FC = () => {
 	const { id } = useParams<{ id: string }>();
 	const [product, setProduct] = useState<Product | null>(null);
-	const PRODUCT_URL = `https://fakestoreapi.com/products/${id}`;
+	const PRODUCT_API = PRODUCT_URL + `/products/${id}`;
 
 	useEffect(() => {
-		fetch(PRODUCT_URL)
+		fetch(PRODUCT_API)
 			.then((res) => res.json())
 			.then((data) => setProduct(data))
 			.catch((error) => console.error('Error fetching product:', error));

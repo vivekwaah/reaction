@@ -9,8 +9,8 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { Link, Route, Routes } from 'react-router-dom'
 import { AppNavigations } from './navigations/AppNavigations'
 import Search from './components/Layouts/Search'
-import ProductDetail from './components/Apps/Store/ProductDetail'
-import StoreCart from './components/Apps/Store/StoreCart'
+import ProductDetail from './components/Apps/ProductStore/ProductDetail'
+import StoreCart from './components/Apps/ProductStore/StoreCart'
 
 
 const userNavigation = [

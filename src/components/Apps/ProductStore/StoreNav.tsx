@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react'
 import { ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { Link } from 'react-router-dom';
+import { PRODUCT_URL } from './utils/config';
 
 const StoreNav: React.FC = () => {
 	const [productCategories, setProductCategories] = useState([]);
-	const PRODUCT_URL = 'https://fakestoreapi.com/products/categories';
+	const PRODUCTS_CATEGORIES_API = PRODUCT_URL + `/products/categories`;
 
 	useEffect(() => {
-		fetch(PRODUCT_URL)
+		fetch(PRODUCTS_CATEGORIES_API)
 			.then((res) => res.json())
 			.then((data) => setProductCategories(data))
 			.catch((error) => console.error('Error fetching product:', error));

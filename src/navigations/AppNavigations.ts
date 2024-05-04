@@ -4,7 +4,7 @@ import TodosApp from '../components/Apps/TodoList/TodosApp';
 import Stopwatch from '../components/Apps/Stopwatch/Stopwatch';
 import ClickCounter from '../components/Apps/ClickCounter/ClickCounter';
 import AppNavigationsModel from './AppNavigationsModel';
-import Store from '../components/Apps/Store/Products';
+import Store from '../components/Apps/ProductStore/Products';
 
 // TODO: Add sub navigation
 export const AppNavigations: AppNavigationsModel[] = [
