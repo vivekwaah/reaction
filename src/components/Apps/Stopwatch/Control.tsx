@@ -1,38 +1,34 @@
-import React from 'react'
+import React from 'react';
 
 interface Props {
-	handlePlay: Function,
-	handleStop: Function,
-	handleReset: Function,
+	handlePlay: Function;
+	handleStop: Function;
+	handleReset: Function;
 }
 
-const Control: React.FC<Props> = ({ handlePlay, handleReset, handleStop }) => {
+const Control: React.FC<Props> = ({ handlePlay, handleStop, handleReset }) => {
 	return (
-
-		<span className="isolate inline-flex rounded-md shadow-sm">
+		<div className="flex space-x-3">
 			<button
-				type="button"
-				className="relative inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10 mr-3"
+				className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
 				onClick={() => handlePlay()}
 			>
 				Start
 			</button>
 			<button
-				type="button"
-				className="relative -ml-px inline-flex items-center bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10 mr-3 rounded-md"
+				className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
 				onClick={() => handleStop()}
 			>
 				Stop
 			</button>
 			<button
-				type="button"
-				className="relative -ml-px inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10"
+				className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
 				onClick={() => handleReset()}
 			>
 				Reset
 			</button>
-		</span>
-	)
-}
+		</div>
+	);
+};
 
-export default Control
+export default Control;
