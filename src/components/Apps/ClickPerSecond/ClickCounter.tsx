@@ -151,7 +151,6 @@ const ClickCounter: React.FC = () => {
 								(<PlusIcon className="-ml-1 -mr-0.5 h-5 w-5 text-gray-400" aria-hidden="true" />) :
 								(<MinusIcon className="-ml-1 -mr-0.5 h-5 w-5 text-gray-400" aria-hidden="true" />)
 						}
-						<span>Stats</span>
 					</button>
 				</div>
 			</div>
