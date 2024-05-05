@@ -3,34 +3,38 @@ import Todo from '../Stopwatch/utils/models';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa';
 import moment from 'moment';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../state/store';
+import { setTodos } from './store/todoListSlice';
 
 interface Props {
   todo: Todo;
-  todos: Todo[];
-  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 
-const SingleTodo: React.FC<Props> = ({ todo, todos, setTodos }) => {
+const SingleTodo: React.FC<Props> = ({ todo }) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [editTodo, setEditTodo] = useState<string>(todo.todo);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const todos = useSelector((state: RootState) => state.todoList.todos);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (edit) inputRef.current?.focus();
   }, [edit]);
 
   const handleDone = (id: number) => {
-    setTodos(todos.map((item) => (item.id === id ? { ...item, isDone: !item.isDone } : item)));
+    dispatch(setTodos(todos.map((item) => (item.id === id ? { ...item, isDone: !item.isDone } : item))));
   };
 
   const handleEdit = (event: React.FormEvent, id: number) => {
     event.preventDefault();
-    setTodos(todos.map((item) => (item.id === id ? { ...item, todo: editTodo } : item)));
+    dispatch(setTodos(todos.map((item) => (item.id === id ? { ...item, todo: editTodo } : item))));
     setEdit(false);
   };
 
   const handleDelete = (id: number) => {
-    setTodos(todos.filter((item) => item.id !== id));
+    dispatch(setTodos(todos.filter((item) => item.id !== id)));
   };
 
   const formatDate = () => {

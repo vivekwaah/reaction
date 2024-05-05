@@ -1,21 +1,18 @@
 import React from 'react'
-import Todo from "../Stopwatch/utils/models";
 import SingleTodo from "./SingleTodo"
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../state/store';
 
-interface Props {
-	todos: Todo[],
-	setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
-}
 
-const TodoList: React.FC<Props> = ({ todos, setTodos }) => {
+const TodoList: React.FC = () => {
+	const todos = useSelector((state: RootState) => state.todoList.todos);
+
 	return (
 		<div className='todos grid grid-cols-4 gap-4 px-4'>
 			{todos.map((todo) => (
 				<SingleTodo
 					todo={todo}
-					todos={todos}
 					key={todo.id.toString()}
-					setTodos={setTodos}
 				/>
 			))}
 		</div>
