@@ -1,4 +1,6 @@
-export const calculateTime = (time: number): string => {
+import moment from "moment";
+
+export const digitalWatchTime = (time: number): string => {
 	let hours = Math.floor(time / 3600);
 	let remainingTime = time - hours * 3600;
 	let minutes = Math.floor(remainingTime / 60);
@@ -10,3 +12,7 @@ export const calculateTime = (time: number): string => {
 
 	return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 }
+
+export const formatDate = (value: number) => {
+	return moment(value).format('LLLL');
+};

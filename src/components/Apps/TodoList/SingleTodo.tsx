@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
 import { setTodos } from './store/todoListSlice';
 import { Todo } from './utils/model';
+import { formatDate } from '../../../utilities/Timer';
 
 interface Props {
   todo: Todo;
@@ -35,10 +36,6 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
 
   const handleDelete = (id: number) => {
     dispatch(setTodos(todos.filter((item) => item.id !== id)));
-  };
-
-  const formatDate = () => {
-    return moment(todo.id).format('LLLL');
   };
 
   return (
@@ -73,7 +70,7 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
         </span>
       </div>
 
-      <div className="flex justify-end italic text-xs pt-2 text-gray-500">{formatDate()}</div>
+      <div className="flex justify-end italic text-xs pt-2 text-gray-500">{formatDate(todo.id)}</div>
     </form>
   );
 };

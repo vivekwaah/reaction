@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { calculateTime } from '../../../utilities/Timer';
+import { digitalWatchTime } from '../../../utilities/Timer';
 
 const Stopwatch: React.FC = () => {
 	const [time, setTime] = useState<number>(0);
@@ -32,7 +32,7 @@ const Stopwatch: React.FC = () => {
 
 	return (
 		<div className="flex flex-col items-center mt-10">
-			<div className="text-4xl mb-5">{calculateTime(time)}</div>
+			<div className="text-4xl mb-5">{digitalWatchTime(time)}</div>
 			<div className="space-x-4">
 				{!isRunning ? (
 					<button
@@ -69,7 +69,7 @@ const Stopwatch: React.FC = () => {
 					<h2 className="text-2xl">Lap Times</h2>
 					<ul className="list-disc pl-8">
 						{laps.map((lap, index) => (
-							<li key={index} className="text-lg">{calculateTime(lap)}</li>
+							<li key={index} className="text-lg">{digitalWatchTime(lap)}</li>
 						))}
 					</ul>
 				</div>
