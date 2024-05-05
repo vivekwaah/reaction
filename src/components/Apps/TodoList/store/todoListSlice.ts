@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TodoListState } from "./model";
-import Todo from "../utils/model";
-
+import { Todo, TodoListState } from "../utils/model";
 
 const initialState: TodoListState = {
 	todos: [],
@@ -14,12 +12,17 @@ const todoListSlice = createSlice({
 	reducers: {
 		addTodoToTodoList: (state, action: PayloadAction<Todo>) => {
 			state.todos = [...state.todos, action.payload]
+			localStorage.setItem('todos', JSON.stringify(state.todos))
 		},
 		setTodos: (state, action: PayloadAction<Todo[]>) => {
 			state.todos = action.payload;
 			localStorage.setItem('todos', JSON.stringify(state.todos))
 		},
 		setCurrentTodo: (state, action: PayloadAction<string>) => {
+			if (!action.payload) {
+				state.todo = null;
+			}
+
 			state.todo = {
 				id: Date.now(),
 				todo: action.payload,

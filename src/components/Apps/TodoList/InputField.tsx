@@ -13,6 +13,7 @@ const InputField: React.FC = () => {
 	const handleAddTodo = () => {
 		if (todo) {
 			dispatch(addTodoToTodoList(todo))
+			dispatch(setCurrentTodo(''));
 		}
 	}
 

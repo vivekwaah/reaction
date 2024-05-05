@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Todo from '../Stopwatch/utils/models';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
 import { setTodos } from './store/todoListSlice';
+import { Todo } from './utils/model';
 
 interface Props {
   todo: Todo;
