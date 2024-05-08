@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DUMMY_API } from "./utils/config";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "./store/authSlice";
+import { RootState } from "../../../state/store";
 
 const Auth: React.FC = () => {
 	const [userName, setUserName] = useState("kminchelle");
@@ -13,6 +14,14 @@ const Auth: React.FC = () => {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+
+	const user = useSelector((state: RootState) => state.authenticate.user);
+
+	useEffect(() => {
+		if (user) {
+			navigate('/auth/user', { replace: true });
+		}
+	}, []);
 
 	const handleFormSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
