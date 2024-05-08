@@ -10,7 +10,9 @@ const InputField: React.FC = () => {
 
 	const dispatch = useDispatch();
 
-	const handleAddTodo = () => {
+	const handleAddTodo = (event: React.FormEvent) => {
+		event.preventDefault();
+
 		if (todo) {
 			dispatch(addTodoToTodoList(todo))
 			dispatch(setCurrentTodo(''));
@@ -19,7 +21,7 @@ const InputField: React.FC = () => {
 
 	const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
 		if (e.ctrlKey && e.key === 'Enter') {
-			handleAddTodo();
+			handleAddTodo(e);
 			inputRef.current?.blur();
 		}
 	};
@@ -28,8 +30,8 @@ const InputField: React.FC = () => {
 		<div>
 			<form
 				className="flex w-full items-center"
-				onSubmit={() => {
-					handleAddTodo();
+				onSubmit={(e) => {
+					handleAddTodo(e);
 					inputRef.current?.blur();
 				}}
 			>

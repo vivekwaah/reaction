@@ -17,8 +17,8 @@ const TodosApp: React.FC = () => {
 	}, []);
 
 	return (
-		<div className="min-h-screen flex flex-col items-center bg-gradient-to-l from-blue-700 to-black font-neucha text-white">
-			<div className="bg-white bg-opacity-30 rounded-lg p-8 shadow-lg">
+		<div className="min-h-screen flex flex-col items-center bg-gradient-to-l from-blue-700 to-black font-neucha text-white rounded-lg">
+			<div className="bg-white bg-opacity-30 p-8 shadow-lg w-full">
 				<InputField />
 				<TodoList />
 			</div>
