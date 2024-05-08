@@ -1,5 +1,5 @@
 export interface AuthState {
-	user: UserData
+	user: UserData | null
 }
 
 export interface UserData {

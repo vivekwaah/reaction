@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthState, UserData } from "../utils/model";
 
 const initialState: AuthState = {
-	user: [],
+	user: null,
 }
 
 const authSlice = createSlice({

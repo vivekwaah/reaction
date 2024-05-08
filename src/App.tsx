@@ -12,6 +12,7 @@ import Search from './components/Layouts/Search'
 import ProductDetail from './components/Apps/ProductStore/ProductDetail'
 import StoreCart from './components/Apps/ProductStore/StoreCart'
 import User from './components/Apps/Auth/User'
+import ProtectedRoute from './components/Apps/Auth/routes/ProtectedRoute'
 
 
 const userNavigation = [
@@ -250,11 +251,13 @@ const App: React.FC = () => {
                   element={<StoreCart />}
                 />
 
-                <Route
-                  key="auth-login"
-                  path="/auth/user"
-                  element={<User />}
-                />
+                <Route element={<ProtectedRoute />}>
+                  <Route
+                    key="auth-login"
+                    path="/auth/user"
+                    element={<User />}
+                  />
+                </Route>
 
               </Routes>
             </div>
