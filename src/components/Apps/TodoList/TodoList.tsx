@@ -53,8 +53,8 @@ const TodoList: React.FC = () => {
 	};
 
 	return (
-		<div className="w-full max-w-5xl mx-auto">
-			<div className="flex justify-end mb-4">
+		<div className="w-full mx-auto">
+			<div className="flex justify-end my-4">
 				{displayGrid ? (
 					<Bars2Icon onClick={toggleDisplay} className="h-5 w-5 text-gray-100 cursor-pointer" aria-hidden="true" />
 				) : (

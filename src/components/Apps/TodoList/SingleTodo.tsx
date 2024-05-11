@@ -4,7 +4,7 @@ import { FaCheck } from 'react-icons/fa';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
-import { setTodos } from './store/todoListSlice';
+import { localStoreTodos, setTodos } from './store/todoListSlice';
 import { Todo } from './utils/model';
 import { formatDate } from '../../../utilities/Timer';
 
@@ -26,16 +26,20 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
 
   const handleDone = (id: number) => {
     dispatch(setTodos(todos.map((item) => (item.id === id ? { ...item, isDone: !item.isDone } : item))));
+    dispatch(localStoreTodos(todos))
   };
 
   const handleEdit = (event: React.FormEvent, id: number) => {
     event.preventDefault();
     dispatch(setTodos(todos.map((item) => (item.id === id ? { ...item, todo: editTodo } : item))));
+    dispatch(localStoreTodos(todos))
     setEdit(false);
   };
 
   const handleDelete = (id: number) => {
     dispatch(setTodos(todos.filter((item) => item.id !== id)));
+    dispatch(localStoreTodos(todos))
+
   };
 
   return (

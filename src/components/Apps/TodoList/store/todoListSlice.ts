@@ -16,7 +16,9 @@ const todoListSlice = createSlice({
 		},
 		setTodos: (state, action: PayloadAction<Todo[]>) => {
 			state.todos = action.payload;
-			localStorage.setItem('todos', JSON.stringify(state.todos))
+		},
+		localStoreTodos: (state, action: PayloadAction<Todo[]>) => {
+			localStorage.setItem('todos', JSON.stringify(action.payload))
 		},
 		setCurrentTodo: (state, action: PayloadAction<string>) => {
 			if (!action.payload) {
@@ -36,6 +38,7 @@ const todoListSlice = createSlice({
 export const {
 	addTodoToTodoList,
 	setCurrentTodo,
+	localStoreTodos,
 	setTodos
 
 } = todoListSlice.actions;
