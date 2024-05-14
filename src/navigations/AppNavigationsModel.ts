@@ -1,6 +1,6 @@
 export default interface AppNavigationsModel {
-	name: string,
-	route: string,
+	id: string,
+	path: string,
 	icon: any,
-	component: React.ComponentType<any>
+	element: any
 }

@@ -8,7 +8,7 @@ interface Props {
 
 const ProductCard: React.FC<Props> = ({product}) => {
 	return (
-		<Link key={product.id} to={`/product/` + product.id} className="group">
+		<Link key={product.id} to={`/store/product/` + product.id} className="group">
 			<div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7 h-32">
 				<img
 					src={product.image}

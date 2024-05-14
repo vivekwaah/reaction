@@ -4,7 +4,7 @@ import StoreNav from './StoreNav';
 import ProductCard from './ProductCard';
 import { PRODUCT_URL } from './utils/config';
 
-const Store: React.FC = () => {
+const Products: React.FC = () => {
 	const [products, setProducts] = useState<Product[]>([]);
 	const PRODUCTS_API = PRODUCT_URL + `/products`;
 
@@ -24,7 +24,7 @@ const Store: React.FC = () => {
 
 					<div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
 						{products.map((product) => (
-							<ProductCard product={product} />
+							<ProductCard product={product} key={product.id} />
 						))}
 					</div>
 				</div>
@@ -33,4 +33,4 @@ const Store: React.FC = () => {
 	);
 };
 
-export default Store;
+export default Products;

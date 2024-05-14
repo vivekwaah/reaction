@@ -1,38 +1,32 @@
 import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
+import { Dialog, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
-  BellIcon,
+  CalendarIcon,
+  ChartPieIcon,
+  DocumentDuplicateIcon,
+  FolderIcon,
+  HomeIcon,
+  UsersIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
-import { Link, Route, Routes } from 'react-router-dom'
+
 import { AppNavigations } from './navigations/AppNavigations'
-import Search from './components/Layouts/Search'
-import ProductDetail from './components/Apps/ProductStore/ProductDetail'
-import StoreCart from './components/Apps/ProductStore/StoreCart'
-import User from './components/Apps/Auth/User'
-import ProtectedRoute from './components/Apps/Auth/routes/ProtectedRoute'
-
-
-const userNavigation = [
-  { name: 'Your profile', href: '#' },
-  { name: 'Sign out', href: '#' },
-]
+import { Link, Outlet } from 'react-router-dom'
 
 function classNames(...classes: (string | boolean | undefined)[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-const App: React.FC = () => {
-  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
+const App = () => {
   const [currentNavigation, setCurrentNavigation] = useState<string>('Home')
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
 
   return (
     <>
-      <div className='antialiased'>
+      <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-50 lg:hidden" onClose={() => setSidebarOpen(false)}>
+          <Dialog className="relative z-50 lg:hidden" onClose={setSidebarOpen}>
             <Transition.Child
               as={Fragment}
               enter="transition-opacity ease-linear duration-300"
@@ -42,7 +36,7 @@ const App: React.FC = () => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <div className="fixed inset-0 bg-gray-900/80" />
+              <div className="fixed inset-0 bg-gray-600/80" />
             </Transition.Child>
 
             <div className="fixed inset-0 flex">
@@ -72,37 +66,37 @@ const App: React.FC = () => {
                       </button>
                     </div>
                   </Transition.Child>
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-4">
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-700 px-6 pb-2 ring-1 ring-white/10">
                     <div className="flex h-16 shrink-0 items-center">
                       <img
                         className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Reaction"
+                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        alt="Your Company"
                       />
                     </div>
                     <nav className="flex flex-1 flex-col">
-                      <ul className="flex flex-1 flex-col gap-y-7">
+                      <ul role="list" className="flex flex-1 flex-col gap-y-7">
                         <li>
-                          <ul className="-mx-2 space-y-1">
+                          <ul role="list" className="-mx-2 space-y-1">
                             {AppNavigations.map((item) => (
-                              <li key={item.name} onClick={() => { setCurrentNavigation(item.name) }}>
+                              <li key={item.id} onClick={() => { setCurrentNavigation(item.id) }}>
                                 <Link
-                                  to={item.route}
+                                  to={item.path}
                                   className={classNames(
-                                    currentNavigation === item.name
+                                    currentNavigation === item.id
                                       ? 'bg-gray-50 text-indigo-600'
-                                      : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                                      : 'text-gray-100 hover:text-indigo-600 hover:bg-gray-50',
                                     'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                                   )}
                                 >
                                   <item.icon
                                     className={classNames(
-                                      currentNavigation === item.name ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                                      currentNavigation === item.id ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
                                       'h-6 w-6 shrink-0'
                                     )}
                                     aria-hidden="true"
                                   />
-                                  {item.name}
+                                  {item.id}
                                 </Link>
                               </li>
                             ))}
@@ -118,153 +112,86 @@ const App: React.FC = () => {
         </Transition.Root>
 
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto border-r border-gray-200 bg-white px-6 pb-4">
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-600 px-6">
             <div className="flex h-16 shrink-0 items-center">
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt="Reaction"
+                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                alt="Your Company"
               />
             </div>
             <nav className="flex flex-1 flex-col">
-              <ul className="flex flex-1 flex-col gap-y-7">
+              <ul role="list" className="flex flex-1 flex-col gap-y-7">
                 <li>
-                  <ul className="-mx-2 space-y-1">
+                  <ul role="list" className="-mx-2 space-y-1">
                     {AppNavigations.map((item) => (
-                      <li key={item.name} onClick={() => { setCurrentNavigation(item.name) }}>
+                      <li key={item.id} onClick={() => { setCurrentNavigation(item.id) }}>
                         <Link
-                          to={item.route}
+                          to={item.path}
                           className={classNames(
-                            currentNavigation === item.name
+                            currentNavigation === item.id
                               ? 'bg-gray-50 text-indigo-600'
-                              : 'text-gray-700 hover:text-indigo-600 hover:bg-gray-50',
+                              : 'text-gray-100 hover:text-indigo-600 hover:bg-gray-50',
                             'group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold'
                           )}
                         >
                           <item.icon
                             className={classNames(
-                              currentNavigation === item.name ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
+                              currentNavigation === item.id ? 'text-indigo-600' : 'text-gray-400 group-hover:text-indigo-600',
                               'h-6 w-6 shrink-0'
                             )}
                             aria-hidden="true"
                           />
-                          {item.name}
+                          {item.id}
                         </Link>
                       </li>
                     ))}
                   </ul>
                 </li>
 
+                <li className="-mx-6 mt-auto">
+                  <a
+                    href="#"
+                    className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
+                  >
+                    <img
+                      className="h-8 w-8 rounded-full bg-gray-800"
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      alt=""
+                    />
+                    <span className="sr-only">Your profile</span>
+                    <span aria-hidden="true">Tom Cook</span>
+                  </a>
+                </li>
               </ul>
             </nav>
           </div>
         </div>
 
-        <div className="lg:pl-72">
-          <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b border-gray-200 bg-white px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8">
-            <button type="button" className="-m-2.5 p-2.5 text-gray-700 lg:hidden" onClick={() => setSidebarOpen(true)}>
-              <span className="sr-only">Open sidebar</span>
-              <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-            </button>
-
-            <div className="h-6 w-px bg-gray-200 lg:hidden" aria-hidden="true" />
-
-            <div className="flex flex-1 gap-x-4 self-stretch lg:gap-x-6">
-              <Search />
-              <div className="flex items-center gap-x-4 lg:gap-x-6">
-                <button type="button" className="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-
-                {/* Separator */}
-                <div className="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200" aria-hidden="true" />
-
-                {/* Profile dropdown */}
-                <Menu as="div" className="relative">
-                  <Menu.Button className="-m-1.5 flex items-center p-1.5">
-                    <span className="sr-only">Open user menu</span>
-                    <img
-                      className="h-8 w-8 rounded-full bg-gray-50"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                      alt=""
-                    />
-                    <span className="hidden lg:flex lg:items-center">
-                      <span className="ml-4 text-sm font-semibold leading-6 text-gray-900" aria-hidden="true">
-                        Vivek Kumar
-                      </span>
-                      <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
-                    </span>
-                  </Menu.Button>
-                  <Transition
-                    as={Fragment}
-                    enter="transition ease-out duration-100"
-                    enterFrom="transform opacity-0 scale-95"
-                    enterTo="transform opacity-100 scale-100"
-                    leave="transition ease-in duration-75"
-                    leaveFrom="transform opacity-100 scale-100"
-                    leaveTo="transform opacity-0 scale-95"
-                  >
-                    <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                      {userNavigation.map((item) => (
-                        <Menu.Item key={item.name}>
-                          {({ active }) => (
-                            <a
-                              href={item.href}
-                              className={classNames(
-                                active ? 'bg-gray-50' : '',
-                                'block px-3 py-1 text-sm leading-6 text-gray-900'
-                              )}
-                            >
-                              {item.name}
-                            </a>
-                          )}
-                        </Menu.Item>
-                      ))}
-                    </Menu.Items>
-                  </Transition>
-                </Menu>
-              </div>
-            </div>
-          </div>
-
-          <main className="py-10">
-            <div className="px-4 sm:px-6 lg:px-8">
-              <Routes>
-                {AppNavigations.map((navigation) => (
-                  <Route
-                    key={navigation.name}
-                    path={navigation.route}
-                    element={<navigation.component />}
-                  />
-                ))}
-
-                <Route
-                  key="product-detail"
-                  path="/product/:id"
-                  element={<ProductDetail />}
-                />
-
-                <Route
-                  key="store-cart"
-                  path="/cart"
-                  element={<StoreCart />}
-                />
-
-                <Route element={<ProtectedRoute />}>
-                  <Route
-                    key="auth-login"
-                    path="/auth/user"
-                    element={<User />}
-                  />
-                </Route>
-
-              </Routes>
-            </div>
-          </main>
+        <div className="sticky top-0 z-40 flex items-center gap-x-6 bg-gray-600 px-4 py-4 shadow-sm sm:px-6 lg:hidden">
+          <button type="button" className="-m-2.5 p-2.5 text-gray-400 lg:hidden" onClick={() => setSidebarOpen(true)}>
+            <span className="sr-only">Open sidebar</span>
+            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+          </button>
+          <div className="flex-1 text-sm font-semibold leading-6 text-white">Dashboard</div>
+          <a href="#">
+            <span className="sr-only">Your profile</span>
+            <img
+              className="h-8 w-8 rounded-full bg-gray-800"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+          </a>
         </div>
+
+        <main className="py-10 lg:pl-72">
+          <div className="px-4 sm:px-6 lg:px-8">
+            <Outlet />
+          </div>
+        </main>
       </div>
     </>
   )
 }
-export default App
+
+export default App;

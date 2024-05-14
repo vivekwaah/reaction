@@ -10,11 +10,11 @@ import Auth from '../components/Apps/Auth/Auth';
 
 // TODO: Add sub navigation
 export const AppNavigations: AppNavigationsModel[] = [
-	{ name: 'Home', route: '/', icon: HomeIcon, component: Home },
-	{ name: 'Counter', route: '/counter', icon: LifebuoyIcon, component: Counter },
-	{ name: 'TODOs', route: '/todos', icon: ListBulletIcon, component: TodosApp },
-	{ name: 'Stopwatch', route: '/stopwatch', icon: ClockIcon, component: Stopwatch },
-	{ name: 'CPS', route: '/cps', icon: CursorArrowRaysIcon, component: ClickCounter },
-	{ name: 'Store', route: '/store', icon: BuildingStorefrontIcon, component: Store },
-	{ name: 'Auth', route: '/auth', icon: UserIcon, component: Auth },
+	{ id: 'Home', path: '/', icon: HomeIcon, element: Home },
+	{ id: 'Counter', path: '/counter', icon: LifebuoyIcon, element: Counter },
+	{ id: 'TODOs', path: '/todos', icon: ListBulletIcon, element: TodosApp },
+	{ id: 'Stopwatch', path: '/stopwatch', icon: ClockIcon, element: Stopwatch },
+	{ id: 'CPS', path: '/cps', icon: CursorArrowRaysIcon, element: ClickCounter },
+	{ id: 'Store', path: '/store', icon: BuildingStorefrontIcon, element: Store },
+	{ id: 'Auth', path: '/auth', icon: UserIcon, element: Auth },
 ];
