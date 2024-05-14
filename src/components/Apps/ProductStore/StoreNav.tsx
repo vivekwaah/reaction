@@ -23,8 +23,9 @@ const StoreNav: React.FC = () => {
 
 							<div className="absolute inset-x-0 bottom-0 sm:static sm:flex-1 sm:self-stretch">
 								<div className="flex h-14 space-x-8 overflow-x-auto border-t px-4 pb-px sm:h-full sm:justify-center sm:overflow-visible sm:border-t-0 sm:pb-0">
-									{productCategories.map((item) => (
+									{productCategories.map((item, index) => (
 										<Link
+											key={index}
 											to={item}
 											className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800 capitalize"
 										>
@@ -38,7 +39,7 @@ const StoreNav: React.FC = () => {
 							<div className="flex flex-1 items-center justify-end">
 								<div className="ml-4 flow-root lg:ml-8">
 									<Link
-										to={'/cart'}
+										to={'/store/cart'}
 										className="group -m-2 flex items-center p-2"
 									>
 										<ShoppingBagIcon

@@ -36,7 +36,6 @@ const Auth: React.FC = () => {
 			.then((response) => {
 				setLoading(false);
 
-				console.log(response.data)
 				dispatch(setUser(response.data))
 
 				Swal.fire({
