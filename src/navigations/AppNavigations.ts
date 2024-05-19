@@ -8,7 +8,6 @@ import Store from '../components/Apps/ProductStore/Products';
 import Counter from '../components/Apps/Counter/Counter';
 import Auth from '../components/Apps/Auth/Auth';
 
-// TODO: Add sub navigation
 export const AppNavigations: AppNavigationsModel[] = [
 	{ id: 'Home', path: '/', icon: HomeIcon, element: Home },
 	{ id: 'Counter', path: '/counter', icon: LifebuoyIcon, element: Counter },
