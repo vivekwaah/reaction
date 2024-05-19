@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -6,38 +6,58 @@ import { Provider } from 'react-redux';
 import { store } from './state/store';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
-import Home from './components/Home';
-import Counter from './components/Apps/Counter/Counter';
 import App from './App';
-import TodosApp from './components/Apps/TodoList/TodosApp';
-import Stopwatch from './components/Apps/Stopwatch/Stopwatch';
-import ClickCounter from './components/Apps/ClickPerSecond/ClickCounter';
-import Products from './components/Apps/ProductStore/Products';
-import Auth from './components/Apps/Auth/Auth';
-import User from './components/Apps/Auth/User';
-import ProductDetail from './components/Apps/ProductStore/ProductDetail';
-import StoreCart from './components/Apps/ProductStore/StoreCart';
-import NoMatch from './components/Layouts/NoMatch';
-import ProtectedRoute from './components/Apps/Auth/routes/ProtectedRoute';
+import Loader from './components/Layouts/Loader';
+
+const Counter = lazy(() => import('./components/Apps/Counter/Counter'));
+const Home = lazy(() => import('./components/Home'));
+const TodosApp = lazy(() => import('./components/Apps/TodoList/TodosApp'));
+const Stopwatch = lazy(() => import('./components/Apps/Stopwatch/Stopwatch'));
+const ClickCounter = lazy(() => import('./components/Apps/ClickPerSecond/ClickCounter'));
+const Auth = lazy(() => import('./components/Apps/Auth/Auth'));
+const User = lazy(() => import('./components/Apps/Auth/User'));
+const ProductDetail = lazy(() => import('./components/Apps/ProductStore/ProductDetail'));
+const NoMatch = lazy(() => import('./components/Layouts/NoMatch'));
+const StoreCart = lazy(() => import('./components/Apps/ProductStore/StoreCart'));
+const Products = lazy(() => import('./components/Apps/ProductStore/Products'));
+const ProtectedRoute = lazy(() => import('./components/Apps/Auth/routes/ProtectedRoute'));
 
 const appRouter = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      { path: '/', element: <Home /> },
-      { path: '/counter', element: <Counter /> },
-      { path: '/todos', element: <TodosApp /> },
-      { path: '/stopwatch', element: <Stopwatch /> },
-      { path: '/cps', element: <ClickCounter /> },
-      { path: '/store', element: <Products />, },
-      { path: "/store/product/:id", element: <ProductDetail /> },
-      { path: "/store/cart", element: <StoreCart /> },
-      { path: '/auth', element: <Auth />, },
-      { path: '*', element: <NoMatch />, },
+      {
+        path: '/', element: <Suspense fallback={<Loader />}><Home /></Suspense>
+      },
+      { path: '/counter', element: <Suspense fallback={<Loader />}><Counter /></Suspense> },
+      {
+        path: '/todos', element: <Suspense fallback={<Loader />}><TodosApp /></Suspense>
+      },
+      {
+        path: '/stopwatch', element: <Suspense fallback={<Loader />}><Stopwatch /></Suspense>
+      },
+      {
+        path: '/cps', element: <Suspense fallback={<Loader />}><ClickCounter /></Suspense>
+      },
+      {
+        path: '/store', element: <Suspense fallback={<Loader />}><Products /></Suspense>
+      },
+      {
+        path: "/store/product/:id", element: <Suspense fallback={<Loader />}><ProductDetail /></Suspense>
+      },
+      {
+        path: "/store/cart", element: <Suspense fallback={<Loader />}><StoreCart /></Suspense>
+      },
+      {
+        path: '/auth', element: <Suspense fallback={<Loader />}><Auth /></Suspense>,
+      },
+      {
+        path: '*', element: <Suspense fallback={<Loader />}><NoMatch /></Suspense>,
+      },
       {
         path: 'auth/user',
-        element: (<ProtectedRoute component={User} />),
+        element: (<Suspense fallback={<Loader />}><ProtectedRoute component={User} /></ Suspense>),
       },
     ],
   },
