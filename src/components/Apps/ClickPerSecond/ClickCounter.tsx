@@ -7,7 +7,7 @@ const ClickCounter: React.FC = () => {
 	const [clickCount, setClickCount] = useState<number>(0);
 	const [timerCount, setTimerCount] = useState<number>(0);
 	const [userTime, setUserTime] = useState<number>(0);
-	const [timerId, setTimerId] = useState<NodeJS.Timeout | null>(null);
+	const [timerId, setTimerId] = useState<number | null>(null);
 	const [clicksPerSecond, setClicksPerSecond] = useState<number>(0);
 	const [isCounting, setIsCounting] = useState<boolean>(false);
 	const [toggleStats, setToggleStats] = useState(false);
@@ -38,7 +38,7 @@ const ClickCounter: React.FC = () => {
 
 		setIsCounting(true);
 
-		const id: NodeJS.Timeout = setInterval(() => {
+		const id: number = setInterval(() => {
 			setTimerCount((prevCount) => prevCount + 1);
 		}, 1000);
 

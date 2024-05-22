@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
 import { decrement, increment, incrementAsync, incrementByValue, setUserIncrementValue } from './store/counterSlice';
 import Heading from './Heading';
+import Swal from 'sweetalert2';
 
 const Counter = () => {
 	const count = useSelector((state: RootState) => state.counter.value);
 	const userIncrementValue = useSelector((state: RootState) => state.counter.userIncrementValue);
 	const dispatch = useDispatch();
+
+	const [asyncLoader, setAsyncLoader] = useState(false);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		dispatch(setUserIncrementValue(parseInt(e.target.value)));
@@ -18,7 +21,18 @@ const Counter = () => {
 	};
 
 	const handleAsyncIncrementByValue = () => {
-		dispatch(incrementAsync(userIncrementValue))
+		setAsyncLoader(true);
+		dispatch(incrementAsync(userIncrementValue)).then((result) => {
+			setAsyncLoader(false);
+		}).catch((err: Error) => {
+			Swal.fire({
+				title: "Error",
+				text: err.message,
+				icon: "error",
+				showCancelButton: false,
+			})
+			setAsyncLoader(false);
+		})
 	};
 
 	return (
@@ -57,9 +71,11 @@ const Counter = () => {
 								Increment by {isNaN(userIncrementValue) ? '---' : userIncrementValue}
 							</button>
 							<button
-								className="px-6 py-3 ml-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400"
+								className="px-6 py-3 ml-2 bg-orange-400 text-white rounded-lg hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-red-600 flex"
 								onClick={handleAsyncIncrementByValue}
 							>
+								{asyncLoader && <div className=" border-4 border-t-transparent border-purple-900 rounded-full w-4 h-4 animate-spin mr-3 mt-1" />}
+
 								Async Increment by {isNaN(userIncrementValue) ? '---' : userIncrementValue}
 							</button>
 						</div>
