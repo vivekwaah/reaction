@@ -116,6 +116,8 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
           onChange={(e) => handleOnSelected(e)}
           className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
           aria-describedby="select todo"
+          disabled={todo.isProtected}
+          title={todo.isProtected ? 'Todo is protected' : 'Select todo'}
         />
         <div className="flex-1 pl-2">
           {edit ? (
