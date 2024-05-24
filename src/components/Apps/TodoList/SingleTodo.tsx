@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MdEdit, MdDelete } from 'react-icons/md';
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck, FaUndo } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
 import { localStoreTodos, setTodos } from './store/todoListSlice';
 import { Todo } from './utils/model';
 import { formatDate } from '../../../utilities/Timer';
+import Swal from 'sweetalert2';
 
 interface Props {
   todo: Todo;
@@ -57,8 +58,20 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
   };
 
   const handleDelete = (id: number) => {
-    dispatch(setTodos(todos.filter((item) => item.id !== id)));
-    dispatch(localStoreTodos(todos))
+    Swal.fire({
+      title: "Are you sure want to delete?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#FF5733",
+      confirmButtonText: "Delete"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let updatedTodos = todos.filter((item) => item.id !== id)
+
+        dispatch(setTodos(updatedTodos));
+        dispatch(localStoreTodos(updatedTodos))
+      }
+    });
   };
 
   return (
@@ -82,13 +95,25 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
       </div>
 
       <div className="flex justify-between items-center">
-        <span className="text-green-500 cursor-pointer transform hover:scale-110 transition duration-300" onClick={() => handleDone(todo.id)}>
-          <FaCheck size={24} />
+        <span
+          className="text-green-500 cursor-pointer transform hover:scale-110 transition duration-300"
+          onClick={() => handleDone(todo.id)}
+          title={todo.isDone ? 'Undo' : 'Mark as done'}
+        >
+          {todo.isDone ? <FaUndo size={24} /> : <FaCheck size={24} />}
         </span>
-        <span className="text-blue-500 cursor-pointer transform hover:scale-110 transition duration-300" onClick={() => onHandleEdit()}>
+        <span
+          className={`cursor-pointer transform transition duration-300 ${todo.isDone ? 'text-blue-300' : 'text-blue-500 hover:scale-110'}`}
+          onClick={!todo.isDone ? () => onHandleEdit() : undefined}
+          title={todo.isDone ? 'Todo marked as done' : 'Edit todo'}
+        >
           <MdEdit size={24} />
         </span>
-        <span className="text-red-500 cursor-pointer transform hover:scale-110 transition duration-300" onClick={() => handleDelete(todo.id)}>
+        <span
+          className="text-red-500 cursor-pointer transform hover:scale-110 transition duration-300"
+          onClick={() => handleDelete(todo.id)}
+          title='Delete this todo'
+        >
           <MdDelete size={24} />
         </span>
       </div>
