@@ -44,14 +44,27 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
   }
 
   const handleProtect = () => {
-    let updatedTodos = todos.map((item) => (item.id === todo.id ? {
-      ...item,
-      isProtected: true,
-      id: Date.now()
-    } : item))
+    Swal.fire({
+      title: "Protect this todo?",
+      icon: "warning",
+      text: 'This will prevent the todo from deletion unless mark as done!',
+      showCancelButton: true,
+      confirmButtonColor: "#EF7C56",
+      confirmButtonText: "Protect"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        let updatedTodos = todos.map((item) => (item.id === todo.id ? {
+          ...item,
+          isProtected: true,
+          id: Date.now()
+        } : item))
 
-    dispatch(setTodos(updatedTodos));
-    dispatch(localStoreTodos(updatedTodos));
+        dispatch(setTodos(updatedTodos));
+        dispatch(localStoreTodos(updatedTodos));
+      }
+    });
+
+
   }
 
   const handleEdit = (event: React.FormEvent, id: number) => {
