@@ -1,7 +1,7 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { AppNavigations } from './navigations/AppNavigations';
+import { AppNavigations, getIdByPath } from './navigations/AppNavigations';
 import { Link, Outlet } from 'react-router-dom';
 import OnlineStatus from './components/Layouts/OnlineStatus';
 
@@ -12,6 +12,13 @@ function classNames(...classes: (string | boolean | undefined)[]) {
 const App = () => {
   const [currentNavigation, setCurrentNavigation] = useState<string>('Home');
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const { pathname } = location;
+
+    let pathId = getIdByPath(pathname);
+    pathId && setCurrentNavigation(pathId);
+  }, [])
 
   return (
     <div>

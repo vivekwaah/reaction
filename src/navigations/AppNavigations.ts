@@ -18,3 +18,8 @@ export const AppNavigations: AppNavigationsModel[] = [
 	{ id: 'Store', path: '/store', icon: BuildingStorefrontIcon },
 	{ id: 'Auth', path: '/auth', icon: UserIcon },
 ];
+
+export const getIdByPath = (path: string) => {
+	const navigation = AppNavigations.find(nav => nav.path === path);
+	return navigation ? navigation.id : null;
+};
