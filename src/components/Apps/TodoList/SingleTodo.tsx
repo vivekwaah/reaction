@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MdEdit, MdDelete } from 'react-icons/md';
+import { MdEdit, MdDelete, MdCodeOff, MdEditOff } from 'react-icons/md';
 import { FaCheck, FaUndo } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
@@ -43,6 +43,17 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
 
   }
 
+  const handleProtect = () => {
+    let updatedTodos = todos.map((item) => (item.id === todo.id ? {
+      ...item,
+      isProtected: true,
+      id: Date.now()
+    } : item))
+
+    dispatch(setTodos(updatedTodos));
+    dispatch(localStoreTodos(updatedTodos));
+  }
+
   const handleEdit = (event: React.FormEvent, id: number) => {
     event.preventDefault();
 
@@ -57,7 +68,7 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
     setEdit(false);
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = () => {
     Swal.fire({
       title: "Are you sure want to delete?",
       icon: "warning",
@@ -66,7 +77,7 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
       confirmButtonText: "Delete"
     }).then((result) => {
       if (result.isConfirmed) {
-        let updatedTodos = todos.filter((item) => item.id !== id)
+        let updatedTodos = todos.filter((item) => item.id !== todo.id)
 
         dispatch(setTodos(updatedTodos));
         dispatch(localStoreTodos(updatedTodos))
@@ -102,6 +113,7 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
         >
           {todo.isDone ? <FaUndo size={24} /> : <FaCheck size={24} />}
         </span>
+
         <span
           className={`cursor-pointer transform transition duration-300 ${todo.isDone ? 'text-blue-300' : 'text-blue-500 hover:scale-110'}`}
           onClick={!todo.isDone ? () => onHandleEdit() : undefined}
@@ -109,10 +121,19 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
         >
           <MdEdit size={24} />
         </span>
+
         <span
-          className="text-red-500 cursor-pointer transform hover:scale-110 transition duration-300"
-          onClick={() => handleDelete(todo.id)}
-          title='Delete this todo'
+          className={`cursor-pointer transform transition duration-300 ${todo.isProtected ? 'text-red-300' : 'text-red-500 hover:scale-110'}`}
+          onClick={!todo.isProtected ? () => handleProtect() : undefined}
+          title={todo.isProtected ? 'This task is isProtected' : 'Protect this task'}
+        >
+          <MdEditOff size={24} />
+        </span>
+
+        <span
+          className={`cursor-pointer transform transition duration-300 ${(todo.isProtected && !todo.isDone) ? 'text-red-300' : 'text-red-500 hover:scale-110'}`}
+          onClick={(todo.isProtected && !todo.isDone) ? undefined : () => handleDelete()}
+          title={(todo.isProtected && !todo.isDone) ? 'This task cannot be deleted' : 'Delete this task'}
         >
           <MdDelete size={24} />
         </span>

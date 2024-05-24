@@ -6,5 +6,6 @@ export interface TodoListState {
 export interface Todo {
 	id: number,
 	todo: string,
-	isDone: boolean
+	isDone: boolean,
+	isProtected?: boolean
 }

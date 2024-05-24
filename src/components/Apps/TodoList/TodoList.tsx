@@ -19,7 +19,25 @@ const TodoList: React.FC = () => {
 	};
 
 	const colDefs = [
-		{ field: 'todo', flex: 2, filter: true, },
+		{
+			field: 'todo',
+			flex: 2,
+			filter: true,
+		},
+		{
+			field: 'isDone',
+			filter: true,
+			cellRenderer: 'agCheckboxCellRenderer',
+			cellEditor: 'agCheckboxCellEditor',
+			sortable: true
+		},
+		{
+			field: 'isProtected',
+			filter: true,
+			cellRenderer: 'agCheckboxCellRenderer',
+			cellEditor: 'agCheckboxCellEditor',
+			sortable: true
+		},
 		{
 			field: 'Date',
 			cellRenderer: DateColumnRender,
