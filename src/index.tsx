@@ -8,6 +8,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import App from './App';
 import Loader from './components/Layouts/Loader';
+import SomethingWentWrong from './components/Layouts/SomethingWentWrong';
 
 const Counter = lazy(() => import('./components/Apps/Counter/Counter'));
 const Home = lazy(() => import('./components/Home'));
@@ -26,6 +27,7 @@ const appRouter = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <SomethingWentWrong />,
     children: [
       {
         path: '/', element: <Suspense fallback={<Loader />}><Home /></Suspense>
