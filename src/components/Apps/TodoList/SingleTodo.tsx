@@ -3,7 +3,7 @@ import { MdEdit, MdDelete, MdCodeOff, MdEditOff } from 'react-icons/md';
 import { FaCheck, FaUndo } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
-import { localStoreTodos, setTodos } from './store/todoListSlice';
+import { addTodoToCheckedList, localStoreTodos, setCheckedTodoIds, setTodos } from './store/todoListSlice';
 import { Todo } from './utils/model';
 import { formatDate } from '../../../utilities/Timer';
 import Swal from 'sweetalert2';
@@ -18,6 +18,8 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const todos = useSelector((state: RootState) => state.todoList.todos);
+  const checkedTodoIds = useSelector((state: RootState) => state.todoList.checkedTodoIds);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,22 +34,19 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
     } : item))
 
     dispatch(setTodos(newTodos));
-
     dispatch(localStoreTodos(newTodos))
   };
 
   const onHandleEdit = () => {
     setEdit(!edit);
-
     setEditTodo(todo.todo);
-
   }
 
   const handleProtect = () => {
     Swal.fire({
       title: "Protect this todo?",
       icon: "warning",
-      text: 'This will prevent the todo from deletion unless mark as done!',
+      text: 'This will prevent the todo from deletion unless marked as done!',
       showCancelButton: true,
       confirmButtonColor: "#EF7C56",
       confirmButtonText: "Protect"
@@ -63,8 +62,6 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
         dispatch(localStoreTodos(updatedTodos));
       }
     });
-
-
   }
 
   const handleEdit = (event: React.FormEvent, id: number) => {
@@ -83,7 +80,7 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
 
   const handleDelete = () => {
     Swal.fire({
-      title: "Are you sure want to delete?",
+      title: "Are you sure you want to delete?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#FF5733",
@@ -98,27 +95,45 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
     });
   };
 
+  const handleOnSelected = (event: React.BaseSyntheticEvent) => {
+    if (event.target.checked) {
+      dispatch(addTodoToCheckedList(todo.id));
+    } else {
+      let updatedCheckedTodoIds = checkedTodoIds.filter(id => id !== todo.id);
+      dispatch(setCheckedTodoIds(updatedCheckedTodoIds));
+    }
+  }
+
   return (
     <form
-      className="flex flex-col border rounded-lg p-5 mt-4 bg-gray-200 hover:shadow-lg hover:scale-105 transition duration-300"
+      className="flex flex-col border rounded-lg p-5 mt-4 bg-white shadow-md hover:shadow-lg hover:scale-105 transition duration-300"
       onSubmit={(e) => handleEdit(e, todo.id)}
     >
-      <div className="flex-1 p-2">
-        {edit ? (
-          <input
-            value={editTodo}
-            onChange={(e) => setEditTodo(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 text-cyan-950"
-            ref={inputRef}
-          />
-        ) : todo.isDone ? (
+      <div className="flex items-center mb-2">
+        <input
+          type="checkbox"
+          checked={checkedTodoIds.includes(todo.id)}
+          onChange={(e) => handleOnSelected(e)}
+          className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+          aria-describedby="select todo"
+        />
+        <div className="flex-1 pl-2">
+          {edit ? (
+            <input
+              value={editTodo}
+              onChange={(e) => setEditTodo(e.target.value)}
+              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 text-gray-700"
+              ref={inputRef}
+            />
+          ) : todo.isDone ? (
             <s className="text-gray-600 line-through">{todo.todo}</s>
-        ) : (
-              <span className="text-gray-900">{todo.todo}</span>
-        )}
+          ) : (
+            <span className="text-gray-900">{todo.todo}</span>
+          )}
+        </div>
       </div>
 
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center mt-2">
         <span
           className="text-green-500 cursor-pointer transform hover:scale-110 transition duration-300"
           onClick={() => handleDone(todo.id)}
@@ -138,7 +153,7 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
         <span
           className={`cursor-pointer transform transition duration-300 ${todo.isProtected ? 'text-red-300' : 'text-red-500 hover:scale-110'}`}
           onClick={!todo.isProtected ? () => handleProtect() : undefined}
-          title={todo.isProtected ? 'This task is isProtected' : 'Protect this task'}
+          title={todo.isProtected ? 'This task is protected' : 'Protect this task'}
         >
           <MdEditOff size={24} />
         </span>

@@ -3,7 +3,8 @@ import { Todo, TodoListState } from "../utils/model";
 
 const initialState: TodoListState = {
 	todos: [],
-	todo: null
+	todo: null,
+	checkedTodoIds: []
 }
 
 const todoListSlice = createSlice({
@@ -31,6 +32,12 @@ const todoListSlice = createSlice({
 				isDone: false,
 			};
 		},
+		addTodoToCheckedList: (state, action: PayloadAction<number>) => {
+			state.checkedTodoIds = [...state.checkedTodoIds, action.payload];
+		},
+		setCheckedTodoIds: (state, action: PayloadAction<number[]>) => {
+			state.checkedTodoIds = action.payload;
+		},
 	},
 });
 
@@ -39,7 +46,9 @@ export const {
 	addTodoToTodoList,
 	setCurrentTodo,
 	localStoreTodos,
-	setTodos
+	setTodos,
+	addTodoToCheckedList,
+	setCheckedTodoIds
 
 } = todoListSlice.actions;
 
