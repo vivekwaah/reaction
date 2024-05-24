@@ -61,7 +61,9 @@ const TodoList: React.FC = () => {
 					<TableCellsIcon onClick={toggleDisplay} className="h-5 w-5 text-gray-100 cursor-pointer" aria-hidden="true" />
 				)}
 			</div>
+
 			{renderGrid()}
+
 		</div>
 	);
 };

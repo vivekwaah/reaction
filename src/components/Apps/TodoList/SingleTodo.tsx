@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { MdEdit, MdDelete } from 'react-icons/md';
 import { FaCheck } from 'react-icons/fa';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
 import { localStoreTodos, setTodos } from './store/todoListSlice';
@@ -21,25 +20,45 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (edit) inputRef.current?.focus();
+    edit && inputRef.current?.focus();
   }, [edit]);
 
   const handleDone = (id: number) => {
-    dispatch(setTodos(todos.map((item) => (item.id === id ? { ...item, isDone: !item.isDone } : item))));
-    dispatch(localStoreTodos(todos))
+    let newTodos = todos.map((item) => (item.id === id ? {
+      ...item,
+      isDone: !item.isDone,
+      id: Date.now()
+    } : item))
+
+    dispatch(setTodos(newTodos));
+
+    dispatch(localStoreTodos(newTodos))
   };
+
+  const onHandleEdit = () => {
+    setEdit(!edit);
+
+    setEditTodo(todo.todo);
+
+  }
 
   const handleEdit = (event: React.FormEvent, id: number) => {
     event.preventDefault();
-    dispatch(setTodos(todos.map((item) => (item.id === id ? { ...item, todo: editTodo } : item))));
-    dispatch(localStoreTodos(todos))
+
+    let updatedTodos = todos.map((item) => (item.id === id ? {
+      ...item,
+      todo: editTodo,
+      id: Date.now()
+    } : item))
+
+    dispatch(setTodos(updatedTodos));
+    dispatch(localStoreTodos(updatedTodos));
     setEdit(false);
   };
 
   const handleDelete = (id: number) => {
     dispatch(setTodos(todos.filter((item) => item.id !== id)));
     dispatch(localStoreTodos(todos))
-
   };
 
   return (
@@ -52,7 +71,7 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
           <input
             value={editTodo}
             onChange={(e) => setEditTodo(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400"
+            className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 text-cyan-950"
             ref={inputRef}
           />
         ) : todo.isDone ? (
@@ -66,7 +85,7 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
         <span className="text-green-500 cursor-pointer transform hover:scale-110 transition duration-300" onClick={() => handleDone(todo.id)}>
           <FaCheck size={24} />
         </span>
-        <span className="text-blue-500 cursor-pointer transform hover:scale-110 transition duration-300" onClick={() => setEdit(!edit)}>
+        <span className="text-blue-500 cursor-pointer transform hover:scale-110 transition duration-300" onClick={() => onHandleEdit()}>
           <MdEdit size={24} />
         </span>
         <span className="text-red-500 cursor-pointer transform hover:scale-110 transition duration-300" onClick={() => handleDelete(todo.id)}>
