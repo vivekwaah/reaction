@@ -1,7 +1,10 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useRouteError } from "react-router-dom"
 
 const SomethingWentWrong: React.FC = () => {
+	let error = useRouteError();
+	console.error(error);
+
 	return (
 		<main className="h-screen w-full flex flex-col justify-center items-center bg-[#1A2238]">
 			<h1 className="text-9xl font-extrabold text-white tracking-widest">404</h1>
