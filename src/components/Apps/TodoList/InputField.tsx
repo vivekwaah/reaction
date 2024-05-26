@@ -13,7 +13,7 @@ const InputField: React.FC = () => {
 	const handleAddTodo = (event: React.FormEvent) => {
 		event.preventDefault();
 
-		if (todo) {
+		if (todo?.todo) {
 			dispatch(addTodoToTodoList(todo))
 			dispatch(setCurrentTodo(''));
 		}
@@ -44,6 +44,7 @@ const InputField: React.FC = () => {
 					}}
 					onKeyDown={handleKeyDown}
 					ref={inputRef}
+					required
 				></textarea>
 
 				<button

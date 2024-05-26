@@ -92,6 +92,7 @@ const InputCheckbox: React.FC = () => {
 			<label
 				htmlFor="todos"
 				className="font-medium cursor-pointer"
+				title='Select non-protected todos'
 				onClick={handleOnSelectAllTodos}
 			>
 				Selected: <span className="font-bold">{checkedTodoIds.length}</span>
