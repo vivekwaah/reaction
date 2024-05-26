@@ -1,12 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MdEdit, MdDelete, MdCodeOff, MdEditOff } from 'react-icons/md';
-import { FaCheck, FaUndo } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../state/store';
 import { addTodoToCheckedList, localStoreTodos, setCheckedTodoIds, setTodos } from './store/todoListSlice';
 import { Todo } from './utils/model';
 import { formatDate } from '../../../utilities/Timer';
-import Swal from 'sweetalert2';
+import TodoAction from './TodoAction';
 
 interface Props {
   todo: Todo;
@@ -26,42 +24,9 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
     edit && inputRef.current?.focus();
   }, [edit]);
 
-  const handleDone = (id: number) => {
-    let newTodos = todos.map((item) => (item.id === id ? {
-      ...item,
-      isDone: !item.isDone,
-      id: Date.now()
-    } : item))
-
-    dispatch(setTodos(newTodos));
-    dispatch(localStoreTodos(newTodos))
-  };
-
   const onHandleEdit = () => {
     setEdit(!edit);
     setEditTodo(todo.todo);
-  }
-
-  const handleProtect = () => {
-    Swal.fire({
-      title: "Protect this todo?",
-      icon: "warning",
-      text: 'This will prevent the todo from deletion unless marked as done!',
-      showCancelButton: true,
-      confirmButtonColor: "#EF7C56",
-      confirmButtonText: "Protect"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let updatedTodos = todos.map((item) => (item.id === todo.id ? {
-          ...item,
-          isProtected: true,
-          id: Date.now()
-        } : item))
-
-        dispatch(setTodos(updatedTodos));
-        dispatch(localStoreTodos(updatedTodos));
-      }
-    });
   }
 
   const handleEdit = (event: React.FormEvent, id: number) => {
@@ -78,23 +43,6 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
     setEdit(false);
   };
 
-  const handleDelete = () => {
-    Swal.fire({
-      title: "Are you sure you want to delete?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#FF5733",
-      confirmButtonText: "Delete"
-    }).then((result) => {
-      if (result.isConfirmed) {
-        let updatedTodos = todos.filter((item) => item.id !== todo.id)
-
-        dispatch(setTodos(updatedTodos));
-        dispatch(localStoreTodos(updatedTodos))
-      }
-    });
-  };
-
   const handleOnSelected = (event: React.BaseSyntheticEvent) => {
     if (event.target.checked) {
       dispatch(addTodoToCheckedList(todo.id));
@@ -106,70 +54,41 @@ const SingleTodo: React.FC<Props> = ({ todo }) => {
 
   return (
     <form
-      className="flex flex-col border rounded-lg p-5 mt-4 bg-white shadow-md hover:shadow-lg hover:scale-105 transition duration-300"
+      className="flex flex-col border rounded-lg px-5 pt-5 pb-1 mt-4 bg-white shadow-md hover:shadow-lg hover:scale-105 transition duration-300 h-56"
       onSubmit={(e) => handleEdit(e, todo.id)}
     >
-      <div className="flex items-center mb-2">
-        <input
-          type="checkbox"
-          checked={checkedTodoIds.includes(todo.id)}
-          onChange={(e) => handleOnSelected(e)}
-          className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
-          aria-describedby="select todo"
-          disabled={todo.isProtected}
-          title={todo.isProtected ? 'Todo is protected' : 'Select todo'}
-        />
-        <div className="flex-1 pl-2">
-          {edit ? (
-            <input
-              value={editTodo}
-              onChange={(e) => setEditTodo(e.target.value)}
-              className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 text-gray-700"
-              ref={inputRef}
-            />
-          ) : todo.isDone ? (
-            <s className="text-gray-600 line-through">{todo.todo}</s>
-          ) : (
-            <span className="text-gray-900">{todo.todo}</span>
-          )}
+      <div className="flex-1 overflow-auto">
+        <div className="flex items-start mb-2">
+          <input
+            type="checkbox"
+            checked={checkedTodoIds.includes(todo.id)}
+            onChange={(e) => handleOnSelected(e)}
+            className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mt-1"
+            aria-describedby="select todo"
+            disabled={todo.isProtected}
+            title={todo.isProtected ? 'Todo is protected' : 'Select todo'}
+          />
+          <div className="flex-1 pl-2 overflow-hidden">
+            {edit ? (
+              <input
+                value={editTodo}
+                onChange={(e) => setEditTodo(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 text-gray-700"
+                ref={inputRef}
+              />
+            ) : todo.isDone ? (
+              <s className="text-gray-600 line-through">{todo.todo}</s>
+            ) : (
+              <span className="text-gray-900">{todo.todo}</span>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="flex justify-between items-center mt-2">
-        <span
-          className="text-green-500 cursor-pointer transform hover:scale-110 transition duration-300"
-          onClick={() => handleDone(todo.id)}
-          title={todo.isDone ? 'Undo' : 'Mark as done'}
-        >
-          {todo.isDone ? <FaUndo size={24} /> : <FaCheck size={24} />}
-        </span>
-
-        <span
-          className={`cursor-pointer transform transition duration-300 ${todo.isDone ? 'text-blue-300' : 'text-blue-500 hover:scale-110'}`}
-          onClick={!todo.isDone ? () => onHandleEdit() : undefined}
-          title={todo.isDone ? 'Todo marked as done' : 'Edit todo'}
-        >
-          <MdEdit size={24} />
-        </span>
-
-        <span
-          className={`cursor-pointer transform transition duration-300 ${todo.isProtected ? 'text-red-300' : 'text-red-500 hover:scale-110'}`}
-          onClick={!todo.isProtected ? () => handleProtect() : undefined}
-          title={todo.isProtected ? 'This task is protected' : 'Protect this task'}
-        >
-          <MdEditOff size={24} />
-        </span>
-
-        <span
-          className={`cursor-pointer transform transition duration-300 ${(todo.isProtected && !todo.isDone) ? 'text-red-300' : 'text-red-500 hover:scale-110'}`}
-          onClick={(todo.isProtected && !todo.isDone) ? undefined : () => handleDelete()}
-          title={(todo.isProtected && !todo.isDone) ? 'This task cannot be deleted' : 'Delete this task'}
-        >
-          <MdDelete size={24} />
-        </span>
+      <div className="flex-shrink-0">
+        <TodoAction todo={todo} onHandleEdit={onHandleEdit} />
+        <div className="flex justify-end italic text-xs pt-2 text-gray-500">{formatDate(todo.id)}</div>
       </div>
-
-      <div className="flex justify-end italic text-xs pt-2 text-gray-500">{formatDate(todo.id)}</div>
     </form>
   );
 };
