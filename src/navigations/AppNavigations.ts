@@ -1,4 +1,5 @@
 import {
+	BoltSlashIcon,
 	BuildingStorefrontIcon,
 	ClockIcon,
 	CursorArrowRaysIcon,
@@ -17,6 +18,7 @@ export const AppNavigations: AppNavigationsModel[] = [
 	{ id: 'CPS', path: '/cps', icon: CursorArrowRaysIcon },
 	{ id: 'Store', path: '/store', icon: BuildingStorefrontIcon },
 	{ id: 'Auth', path: '/auth', icon: UserIcon },
+	{ id: 'Form', path: '/form', icon: BoltSlashIcon },
 ];
 
 export const getIdByPath = (path: string) => {
