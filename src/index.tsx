@@ -22,6 +22,7 @@ const NoMatch = lazy(() => import('./components/Layouts/NoMatch'));
 const StoreCart = lazy(() => import('./components/Apps/ProductStore/StoreCart'));
 const Products = lazy(() => import('./components/Apps/ProductStore/Products'));
 const ProtectedRoute = lazy(() => import('./components/Apps/Auth/routes/ProtectedRoute'));
+const Form = lazy(() => import('./components/Apps/Form/Form'));
 
 const appRouter = createBrowserRouter([
   {
@@ -60,6 +61,10 @@ const appRouter = createBrowserRouter([
       {
         path: 'auth/user',
         element: (<Suspense fallback={<Loader />}><ProtectedRoute component={User} /></ Suspense>),
+      },
+      {
+        path: '/form',
+        element: (<Suspense fallback={<Loader />}><Form /></ Suspense>),
       },
     ],
   },
