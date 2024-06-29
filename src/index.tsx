@@ -9,6 +9,7 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import App from './App';
 import Loader from './components/Layouts/Loader';
 import SomethingWentWrong from './components/Layouts/SomethingWentWrong';
+import Quiz from './components/Apps/Quiz/Quiz';
 
 const Counter = lazy(() => import('./components/Apps/Counter/Counter'));
 const Home = lazy(() => import('./components/Home'));
@@ -65,6 +66,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/form',
         element: (<Suspense fallback={<Loader />}><Form /></ Suspense>),
+      },
+      {
+        path: '/quiz',
+        element: (<Suspense fallback={<Loader />}><Quiz /></ Suspense>),
       },
     ],
   },
