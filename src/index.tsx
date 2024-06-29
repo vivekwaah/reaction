@@ -11,6 +11,7 @@ import Loader from './components/Layouts/Loader';
 import SomethingWentWrong from './components/Layouts/SomethingWentWrong';
 import Quiz from './components/Apps/Quiz/Quiz';
 
+
 const Counter = lazy(() => import('./components/Apps/Counter/Counter'));
 const Home = lazy(() => import('./components/Home'));
 const TodosApp = lazy(() => import('./components/Apps/TodoList/TodosApp'));
