@@ -9,8 +9,6 @@ import "ag-grid-community/styles/ag-theme-quartz.css";
 import App from './App';
 import Loader from './components/Layouts/Loader';
 import SomethingWentWrong from './components/Layouts/SomethingWentWrong';
-import Quiz from './components/Apps/Quiz/Quiz';
-
 
 const Counter = lazy(() => import('./components/Apps/Counter/Counter'));
 const Home = lazy(() => import('./components/Home'));
@@ -25,6 +23,8 @@ const StoreCart = lazy(() => import('./components/Apps/ProductStore/StoreCart'))
 const Products = lazy(() => import('./components/Apps/ProductStore/Products'));
 const ProtectedRoute = lazy(() => import('./components/Apps/Auth/routes/ProtectedRoute'));
 const Form = lazy(() => import('./components/Apps/Form/Form'));
+const Quiz = lazy(() => import('./components/Apps/Quiz/Quiz'));
+const TypeAhead = lazy(() => import('./components/Apps/TypeAhead/TypeAhead'));
 
 const appRouter = createBrowserRouter([
   {
@@ -71,6 +71,10 @@ const appRouter = createBrowserRouter([
       {
         path: '/quiz',
         element: (<Suspense fallback={<Loader />}><Quiz /></ Suspense>),
+      },
+      {
+        path: '/type-ahead',
+        element: (<Suspense fallback={<Loader />}><TypeAhead /></ Suspense>),
       },
     ],
   },

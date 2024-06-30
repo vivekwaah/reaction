@@ -6,6 +6,7 @@ import {
 	HomeIcon,
 	LifebuoyIcon,
 	ListBulletIcon,
+	PencilIcon,
 	QuestionMarkCircleIcon,
 	UserIcon
 } from '@heroicons/react/24/outline';
@@ -21,6 +22,7 @@ export const AppNavigations: AppNavigationsModel[] = [
 	{ id: 'Auth', path: '/auth', icon: UserIcon },
 	{ id: 'Form', path: '/form', icon: BoltSlashIcon },
 	{ id: 'Quiz', path: '/quiz', icon: QuestionMarkCircleIcon },
+	{ id: 'TypeAhead', path: '/type-ahead', icon: PencilIcon },
 ];
 
 export const getIdByPath = (path: string) => {
