@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { DUMMY_API } from "./utils/config";
+import { DUMMY_API, DUMMY_API_AUTH_PASSWORD, DUMMY_API_AUTH_USERNAME } from "./utils/config";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
@@ -8,8 +8,10 @@ import { setUser } from "./store/authSlice";
 import { RootState } from "../../../state/store";
 
 const Auth: React.FC = () => {
-	const [userName, setUserName] = useState("kminchelle");
-	const [userPassword, setUserPassword] = useState("0lelplR");
+	const [userCredentials, setUserCredentials] = useState({
+		name: DUMMY_API_AUTH_USERNAME,
+		password: DUMMY_API_AUTH_PASSWORD
+	});
 	const [errorMessage, setErrorMessage] = useState("");
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
@@ -29,8 +31,8 @@ const Auth: React.FC = () => {
 		setLoading(true);
 
 		axios.post(`${DUMMY_API}/auth/login`, {
-			username: userName,
-			password: userPassword,
+			username: userCredentials.name,
+			password: userCredentials.password,
 			expiresInMins: 30,
 		})
 			.then((response) => {
@@ -77,8 +79,8 @@ const Auth: React.FC = () => {
 									name="email"
 									type="text"
 									required
-									value={userName}
-									onChange={(e) => setUserName(e.target.value)}
+									value={userCredentials.name}
+									onChange={(e) => setUserCredentials((prev) => ({ ...prev, name: e.target.value }))}
 									className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 								/>
 							</div>
@@ -95,8 +97,8 @@ const Auth: React.FC = () => {
 									type="password"
 									autoComplete="current-password"
 									required
-									value={userPassword}
-									onChange={(e) => setUserPassword(e.target.value)}
+									value={userCredentials.password}
+									onChange={(e) => setUserCredentials((prev) => ({ ...prev, password: e.target.value }))}
 									className="px-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
 								/>
 							</div>
