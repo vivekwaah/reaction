@@ -5,8 +5,17 @@ import { IdentificationIcon, InboxIcon, RssIcon } from "@heroicons/react/24/outl
 import { useSelector } from "react-redux";
 import { RootState } from "../../../state/store";
 
+interface UserData {
+	username: string,
+	email: string,
+	firstName: string,
+	lastName: string,
+	gender: string,
+	image: string
+}
+
 const User: React.FC = () => {
-	const [userData, setUserData] = useState<any>(null);
+	const [userData, setUserData] = useState<UserData | null>(null);
 	const [loading, setLoading] = useState<boolean>(true);
 	const loginUser = useSelector((state: RootState) => state.authenticate.user);
 
