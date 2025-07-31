@@ -13,7 +13,7 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
-    allowedHosts: [/.*\.direct\.labs\.play-with-docker\.com$/]
+    allowedHosts: true
   },
   define: {
     global: 'globalThis',
